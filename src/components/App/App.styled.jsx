@@ -13,8 +13,8 @@ export const Container = styled.div`
     box-shadow: ${p => p.theme.shadow}; 
     margin-left: auto;
     margin-right: auto;
-    padding-top: 5px;
-    padding-bottom: 15px;    
+    margin-top: ${p=>p.theme.space[4]}px;
+    padding-bottom: ${p=>p.theme.space[4]}px;    
         @media screen and (min-width: 768px) {
         width: 75%;
     }
@@ -22,17 +22,4 @@ export const Container = styled.div`
         width: 40%;
         margin-top: 100px;
     }
-`;
-
-export const PageTitle = styled.h1`
-    display: block;
-    text-align: center;
-    font-style: italic;
-    margin-bottom:${p => p.theme.space[4]}px;
-    background-color: ${p => p.theme.colors.secondary};
-`;
-
-export const SectionTitle = styled.h2`
-    font-size: ${p => p.theme.fontSizes.l};
-    margin-bottom: 15px;
 `;

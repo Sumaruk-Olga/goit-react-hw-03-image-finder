@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Container, SectionTitle, PageTitle } from "./App.styled";
+import { Container} from "./App.styled";
 import { Searchbar } from "components/Searchbar/Searchbar";
 import { ImageGallery } from "components/ImageGallery/ImageGallery";
 import { Button } from "components/Button/Button";
@@ -18,6 +18,7 @@ export class App extends Component {
     if (this.state.search !== prevState.search) {
       console.log('змінився запит');
       console.log('відправили запит на сервер');
+      this.handleSearch();
     }
   }
 
@@ -26,18 +27,21 @@ export class App extends Component {
   }
 
 
+  handleSearch=()=>{
+    console.log('робимо фетч');
+  }
+
   handleLoadMore = () => {
     console.log('завантажуємо ще');
+    this.handleSearch();
   }
 
   render() {
     return (
-      <Container>
-        <PageTitle>GoIT React HW 3 Image finder</PageTitle>
+      <Container>        
         <Searchbar onSubmit={this.handleSubmit} />
         <ImageGallery />
-        <Button onClick={this.handleLoadMore} />
-        <SectionTitle>other title</SectionTitle>
+        <Button onClick={this.handleLoadMore} />        
       </Container>
     );
   }

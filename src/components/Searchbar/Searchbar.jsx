@@ -1,8 +1,9 @@
 import { Formik, Form,  Field} from 'formik';
 import PropTypes from 'prop-types';
+import { PageTitle } from './SearchBar.styled';
 
 export function Searchbar({onSubmit}) {
-    return (<header>
+    return (<PageTitle>
         <Formik
             initialValues={{ search: '' }}
             onSubmit={(values, actions) => {
@@ -23,7 +24,7 @@ export function Searchbar({onSubmit}) {
     />
     </Form>
 </Formik>
-</header>)
+</PageTitle>)
 }
 
 Searchbar.propTypes = {
