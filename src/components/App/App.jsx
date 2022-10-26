@@ -40,10 +40,9 @@ export class App extends Component {
     if (this.state.page !== prevState.page & this.state.page!==1) {     
       try {
         const data = await searchImage({ search: this.state.search, page: this.state.page });
-               
-         this.setState(prevState => ({
-      imageArray: [...prevState.imageArray, ...data.hits],
-           status: "resolved",
+        this.setState(prevState => ({
+          imageArray: [...prevState.imageArray, ...data.hits],
+          status: "resolved",
       showModal: false,
     }))
       

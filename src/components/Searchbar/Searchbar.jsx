@@ -5,12 +5,12 @@ import { PageTitle, SearchButton, StyledField } from './SearchBar.styled';
 
 export function Searchbar({onSubmit}) {
     return (<PageTitle>
-        <Formik
+<Formik
             initialValues={{ search: '' }}
             onSubmit={(values, actions) => {
                 onSubmit(values);
                 actions.resetForm();
-       }}>
+    }}>
     <Form>
         <SearchButton type="submit">
             <FcSearch/>
