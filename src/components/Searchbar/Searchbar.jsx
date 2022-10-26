@@ -1,6 +1,7 @@
-import { Formik, Form,  Field} from 'formik';
+import { Formik, Form} from 'formik';
 import PropTypes from 'prop-types';
-import { PageTitle } from './SearchBar.styled';
+import { FcSearch } from "react-icons/fc";
+import { PageTitle, SearchButton, StyledField } from './SearchBar.styled';
 
 export function Searchbar({onSubmit}) {
     return (<PageTitle>
@@ -11,11 +12,11 @@ export function Searchbar({onSubmit}) {
                 actions.resetForm();
        }}>
     <Form>
-        <button type="submit">
-            <span>Search</span>
-        </button>
+        <SearchButton type="submit">
+            <FcSearch/>
+        </SearchButton>
 
-    <Field
+    <StyledField
         type="text"
         name="search"
         autoComplete="off"

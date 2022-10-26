@@ -1,7 +1,12 @@
-export function ImageGalleryItem() {
+export function ImageGalleryItem({ image }) {
+    console.log('image.id', image.id);
     return (
-        <div>Card
-            <img src="" alt="" />
-        </div>
+        <li>
+            <img src={image.previewURL} alt={image.tags} />
+        </li>        
+        // pageURL
+        // previewURL
+        // largeImageURL
     )
 }
+
