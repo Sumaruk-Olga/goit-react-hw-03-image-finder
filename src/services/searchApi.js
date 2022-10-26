@@ -11,7 +11,7 @@ export const searchImage = async({search, page}) =>{
         orientation: 'horizontal',
         safesearch: true,
         page: page,
-        per_page: 3,
+        per_page: 12,
     });
     const response = await axios.get(`?${queryParams}`);    
     return response.data;
