@@ -2,12 +2,12 @@
 
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 
-export function ImageGallery({ imageArray }) {
+export function ImageGallery({ imageArray, onClick }) {
     // console.log('imageArray.hits', imageArray.hits);
     return (<ul>
         {/* пройтись мєпом і створити на кожній йтерації картку */
             
-            imageArray.map(image => <ImageGalleryItem key={image.id} image={image} />)
+            imageArray.map(image => <ImageGalleryItem key={image.id} image={image} onClick={onClick} />)
         }        
     </ul>
             )

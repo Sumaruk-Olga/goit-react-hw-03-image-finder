@@ -1,12 +1,11 @@
-export function ImageGalleryItem({ image }) {
-    console.log('image.id', image.id);
+export function ImageGalleryItem({ image, onClick }) {
+    console.log('onClick', onClick);
     return (
-        <li>
+        <li onClick={() => onClick({
+            url: image.largeImageURL,
+            alt:image.tags,
+        })}>
             <img src={image.previewURL} alt={image.tags} />
-        </li>        
-        // pageURL
-        // previewURL
-        // largeImageURL
+        </li>
     )
 }
-
