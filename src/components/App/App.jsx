@@ -1,5 +1,6 @@
 import { Component } from "react";
-// import { Container} from "./App.styled";
+import { TailSpin } from 'react-loader-spinner'
+
 import { Searchbar } from "components/Searchbar/Searchbar";
 import { ImageGallery } from "components/ImageGallery/ImageGallery";
 import { Button } from "components/Button/Button";
@@ -16,65 +17,69 @@ export class App extends Component {
     page: 1,
     error: null,
     showModal: false,
-    image:null,
+    image: false,
   };
 
 
-  async componentDidUpdate(_, prevState) {    
+  async componentDidUpdate(_, prevState) {
     if (this.state.search !== prevState.search) {
       try {
-        const data = await searchImage({ search: this.state.search, page: this.state.page });       
-        this.setState({
-          imageArray: [...data.hits],
-          status: "resolved",
-          showModal: false,
-    })          
-    } catch {
-      this.setState({ error: `Failed to load ${this.state.search} :(`, status: "rejected", showModal:true });
-    } finally {
-      // i`m thinking
+        const data = await searchImage({ search: this.state.search, page: this.state.page });
+        if (data.hits.length === 0) {
+          this.setState({ error: `${this.state.search} can not find :(`, status: "rejected", showModal: true });
+        } else {
+          this.setState({
+            imageArray: [...data.hits],
+            status: "resolved",
+            showModal: false,
+          })
+        }
+      } catch {
+        this.setState({ error: `Failed to load ${this.state.search} :(`, status: "rejected", showModal: true });
+      } finally {
+        // i`m thinking
         
-    }
+      }
     }
 
-    if (this.state.page !== prevState.page & this.state.page!==1) {     
+    if (this.state.page !== prevState.page & this.state.page !== 1) {
       try {
         const data = await searchImage({ search: this.state.search, page: this.state.page });
         this.setState(prevState => ({
           imageArray: [...prevState.imageArray, ...data.hits],
           status: "resolved",
-      showModal: false,
-    }))
+          showModal: false,
+        }))
       
-    } catch {
-      this.setState({ error: `Failed to load ${this.state.search} :(`, status: "rejected", showModal:true });
-    } finally {
-      // i`m thinking        
+      } catch {
+        this.setState({ error: `Failed to load ${this.state.search} :(`, status: "rejected", showModal: true });
+      } finally {
+        // i`m thinking        
+      }
     }
-    }
 
   }
 
-  handleSubmit = ({search}) => {    
-    this.setState({ search, page:1 });    
+  handleSubmit = ({ search }) => {
+    this.setState({ search, page: 1 });
   }
 
 
-  handleSearch = () => {    
-    this.setState({ status: "pending" , showModal:true});    
+  handleSearch = () => {
+    this.setState({ status: "pending", showModal: true });
   }
 
-  openModal = ({url, alt}) => {
+  openModal = ({ url, alt }) => {
     this.setState((prevState) => ({
       showModal: !prevState.showModal,
-      image: {url, alt}
+      image: { url, alt }
     }));
     console.log(url, alt);
   }
 
   toggleModal = () => {
     this.setState((prevState) => ({
-      showModal: !prevState.showModal,      
+      showModal: !prevState.showModal,
     }));
   }
 
@@ -86,18 +91,38 @@ export class App extends Component {
   }
 
   render() {
-    return (<>
-      {/* // <Container>         */}
+    
+    return (
+      <>
         <Searchbar onSubmit={this.handleSubmit} />
-        {this.state.status === "resolved" && <>
-          < ImageGallery imageArray={this.state.imageArray} onClick={this.openModal} />
-          <Button onClick={this.handleLoadMore} />
-        </>}
-        {this.state.showModal && <Modal onClose={this.toggleModal}><Image data={this.state.image} /></Modal>}
+
         {this.state.status === "rejected" && <Modal onClose={this.toggleModal}><div>{this.state.error}</div></Modal>}
-        {this.state.status==="pending" && <Modal onClose={this.toggleModal}><div>loading</div></Modal>}                
-      {/* // </Container> */}
+          
+        {this.state.status === "pending" && <Modal onClose={this.toggleModal}><TailSpin
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="tail-spin-loading"
+          radius="1"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+        </Modal>
+        }
+        
+        {this.state.status === "resolved" && <>
+          {
+            this.state.image ?
+              <Modal onClose={this.toggleModal}><Image data={this.state.image} /></Modal> :
+              <>
+                < ImageGallery imageArray={this.state.imageArray} onClick={this.openModal} />
+                <Button onClick={this.handleLoadMore} />
+              </>
+          }
+        </>
+        }
       </>
     );
-  }
-};
+  };
+}

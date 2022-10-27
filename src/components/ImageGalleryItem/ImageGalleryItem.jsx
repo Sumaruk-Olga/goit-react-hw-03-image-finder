@@ -1,5 +1,5 @@
 export function ImageGalleryItem({ image, onClick }) {
-    console.log('onClick', onClick);
+    // console.log('onClick', onClick);
     return (
         <li onClick={() => onClick({
             url: image.largeImageURL,
