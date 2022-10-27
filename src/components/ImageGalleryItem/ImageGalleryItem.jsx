@@ -5,7 +5,7 @@ export function ImageGalleryItem({ image, onClick }) {
             url: image.largeImageURL,
             alt:image.tags,
         })}>
-            <img src={image.previewURL} alt={image.tags} />
+            <img src={image.webformatURL } alt={image.tags} />
         </li>
     )
 }

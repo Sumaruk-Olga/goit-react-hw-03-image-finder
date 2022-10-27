@@ -13,13 +13,14 @@ export const theme = {
         s: '12px',
         m: '18px',
         l: '24px',
+        xl: '32px',
     },
     radii: {
         normal: '4px',
         circle: '50%',
     },
     shadow: '10px 5px 5px #9342f5',    
-    space: [0, 2, 4, 8, 16, 32],
+    space: [0, 2, 4, 8, 16, 32, 64],
     status: {
         online: '#12992d',
         offline:'#bd132a',

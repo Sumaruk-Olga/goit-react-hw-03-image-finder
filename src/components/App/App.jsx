@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Container} from "./App.styled";
+// import { Container} from "./App.styled";
 import { Searchbar } from "components/Searchbar/Searchbar";
 import { ImageGallery } from "components/ImageGallery/ImageGallery";
 import { Button } from "components/Button/Button";
@@ -86,8 +86,8 @@ export class App extends Component {
   }
 
   render() {
-    return (
-      <Container>        
+    return (<>
+      {/* // <Container>         */}
         <Searchbar onSubmit={this.handleSubmit} />
         {this.state.status === "resolved" && <>
           < ImageGallery imageArray={this.state.imageArray} onClick={this.openModal} />
@@ -96,7 +96,8 @@ export class App extends Component {
         {this.state.showModal && <Modal onClose={this.toggleModal}><Image data={this.state.image} /></Modal>}
         {this.state.status === "rejected" && <Modal onClose={this.toggleModal}><div>{this.state.error}</div></Modal>}
         {this.state.status==="pending" && <Modal onClose={this.toggleModal}><div>loading</div></Modal>}                
-      </Container>
+      {/* // </Container> */}
+      </>
     );
   }
 };

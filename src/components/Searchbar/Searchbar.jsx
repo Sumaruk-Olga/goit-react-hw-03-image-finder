@@ -1,7 +1,7 @@
-import { Formik, Form} from 'formik';
+import { Formik} from 'formik';
 import PropTypes from 'prop-types';
 import { FcSearch } from "react-icons/fc";
-import { PageTitle, SearchButton, StyledField } from './SearchBar.styled';
+import { PageTitle, StyledForm, SearchButton, StyledField } from './SearchBar.styled';
 
 export function Searchbar({onSubmit}) {
     return (<PageTitle>
@@ -11,7 +11,7 @@ export function Searchbar({onSubmit}) {
                 onSubmit(values);
                 actions.resetForm();
     }}>
-    <Form>
+    <StyledForm>
         <SearchButton type="submit">
             <FcSearch/>
         </SearchButton>
@@ -23,7 +23,7 @@ export function Searchbar({onSubmit}) {
         autoFocus
         placeholder="Search images and photos"
     />
-    </Form>
+    </StyledForm>
 </Formik>
 </PageTitle>)
 }
@@ -32,3 +32,19 @@ Searchbar.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     
 }
+
+// {/* <header class="searchbar">
+//   <form class="form">
+//     <button type="submit" class="button">
+//       <span class="button-label">Search</span>
+//     </button>
+
+//     <input
+//       class="input"
+//       type="text"
+//       autocomplete="off"
+//       autofocus
+//       placeholder="Search images and photos"
+//     />
+//   </form>
+// </header> */}
