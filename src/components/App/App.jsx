@@ -98,7 +98,12 @@ export class App extends Component {
 
         {this.state.status === "rejected" && <Modal onClose={this.toggleModal}><div>{this.state.error}</div></Modal>}
           
-        {this.state.status === "pending" && <Modal onClose={this.toggleModal}><TailSpin
+        {this.state.status === "pending" && <>
+          {this.state.imageArray.length > 0 ?
+            <>
+            < ImageGallery imageArray={this.state.imageArray} onClick={this.openModal} />
+              <Button onClick={this.handleLoadMore} />
+            <TailSpin
           height="80"
           width="80"
           color="#4fa94d"
@@ -107,8 +112,18 @@ export class App extends Component {
           wrapperStyle={{}}
           wrapperClass=""
           visible={true}
-        />
-        </Modal>
+              />
+            </> : <TailSpin
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="tail-spin-loading"
+          radius="1"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />}
+        </>
         }
         
         {this.state.status === "resolved" && <>
