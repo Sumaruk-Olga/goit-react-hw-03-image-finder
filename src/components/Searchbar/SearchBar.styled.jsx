@@ -9,7 +9,7 @@ export const PageTitle = styled.header`
     left: 0;
     position: sticky;
     overflow: hidden;
-    min-height: ${p => p.theme.space[6]}px;
+    min-height: ${p => p.theme.space[7]}px;
     color: ${p => p.theme.text.secondary};
     background-color: ${p => p.theme.colors.secondary};
     box-shadow: ${p => p.theme.shadow};
@@ -35,12 +35,10 @@ export const StyledForm = styled(Form)`
 
 export const SearchButton = styled.button`
 display: inline-block;
-  width: 48px;
-  height: 48px;
+  width: ${p => p.theme.space[6]}px;
+  height: ${p => p.theme.space[6]}px;
   border: 0;  
-  /* background-size: 40%; */
-  /* background-repeat: no-repeat; */
-  /* background-position: center; */
+  background-color: ${p=>p.theme.colors.page};
   opacity: 0.6;
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
@@ -50,31 +48,25 @@ display: inline-block;
   opacity: 1;
 }
 
-/* >svg{
-    position: absolute;
-  width: 10px;
-  height: 10px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  clip-path: inset(50%);
-  border: 0; */
-/* } */
+  & > svg{
+    width: 100%;
+    height: 100%;
+  }
+
 `;
 
 export const StyledField = styled(Field)`
     display: inline-block;
   width: 100%;
   font: inherit;
-  font-size: 20px;
+  font-size: ${p => p.theme.fontSizes.l};
   border: none;
   outline: none;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: ${p => p.theme.space[2]}px;
+  padding-right: ${p => p.theme.space[2]}px;
 
   &::placeholder {
   font: inherit;
-  font-size: 18px;
+  font-size: ${p => p.theme.fontSizes.m};;
 }
 `;

@@ -3,10 +3,11 @@ import { Component } from "react";
 import { Loading } from "components/Loading/Loading";
 import { Searchbar } from "components/Searchbar/Searchbar";
 import { ImageGallery } from "components/ImageGallery/ImageGallery";
-import { Button } from "components/Button/Button";
+import { LoadMoreBtn } from "components/LoadMoreBtn/LoadMoreBtn";
 import { searchImage } from "services/searchApi";
 import Modal from "components/Modal/Modal";
 import { Image } from "components/Image/Image";
+import { Container } from "./App.styled";
 
 
 export class App extends Component {
@@ -93,7 +94,7 @@ export class App extends Component {
   render() {
     
     return (
-      <>
+      <Container>
         <Searchbar onSubmit={this.handleSubmit} />
 
         {this.state.status === "rejected" && <Modal onClose={this.toggleModal}><div>{this.state.error}</div></Modal>}
@@ -102,7 +103,7 @@ export class App extends Component {
           {this.state.imageArray.length > 0 ?
             <>
             < ImageGallery imageArray={this.state.imageArray} onClick={this.openModal} />
-              <Button onClick={this.handleLoadMore} />
+              <LoadMoreBtn onClick={this.handleLoadMore} />
             <Loading/>
             </> : <Loading/>}
         </>
@@ -114,12 +115,12 @@ export class App extends Component {
               <Modal onClose={this.toggleModal}><Image data={this.state.image} /></Modal> :
               <>
                 < ImageGallery imageArray={this.state.imageArray} onClick={this.openModal} />
-                <Button onClick={this.handleLoadMore} />
+                <LoadMoreBtn onClick={this.handleLoadMore} />
               </>
           }
         </>
         }
-      </>
+      </Container>
     );
   };
 }

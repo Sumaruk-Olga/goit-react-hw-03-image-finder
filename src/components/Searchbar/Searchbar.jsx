@@ -7,9 +7,9 @@ export function Searchbar({onSubmit}) {
     return (<PageTitle>
 <Formik
             initialValues={{ search: '' }}
-            onSubmit={(values, actions) => {
+            onSubmit={(values, {resetForm}) => {
                 onSubmit(values);
-                actions.resetForm();
+                resetForm();
     }}>
     <StyledForm>
         <SearchButton type="submit">
