@@ -1,6 +1,6 @@
 import { Component } from "react";
-import { TailSpin } from 'react-loader-spinner'
 
+import { Loading } from "components/Loading/Loading";
 import { Searchbar } from "components/Searchbar/Searchbar";
 import { ImageGallery } from "components/ImageGallery/ImageGallery";
 import { Button } from "components/Button/Button";
@@ -103,26 +103,8 @@ export class App extends Component {
             <>
             < ImageGallery imageArray={this.state.imageArray} onClick={this.openModal} />
               <Button onClick={this.handleLoadMore} />
-            <TailSpin
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="tail-spin-loading"
-          radius="1"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-              />
-            </> : <TailSpin
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="tail-spin-loading"
-          radius="1"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />}
+            <Loading/>
+            </> : <Loading/>}
         </>
         }
         
