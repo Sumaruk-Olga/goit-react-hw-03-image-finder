@@ -8,6 +8,7 @@ import { searchImage } from "services/searchApi";
 import Modal from "components/Modal/Modal";
 import { LargeImage } from "components/LargeImage/LargeImage";
 import { Container } from "./App.styled";
+import { ErrorMessage } from "components/ErrorMessage/ErrorMessage";
 
 
 export class App extends Component {
@@ -18,16 +19,17 @@ export class App extends Component {
     page: 1,
     error: null,
     showModal: false,
-    image: false,
+    image: {},
   };
 
 
   async componentDidUpdate(_, prevState) {
-    if (this.state.search !== prevState.search) {
+    const {search, page } = this.state;
+    if (search !== prevState.search) {
       try {
-        const data = await searchImage({ search: this.state.search, page: this.state.page });
+        const data = await searchImage({ search, page });
         if (data.hits.length === 0) {
-          this.setState({ error: `${this.state.search} can not find :(`, status: "rejected", showModal: true });
+          this.setState({ error: `${search} not found :(`, status: "rejected", showModal: true });
         } else {
           this.setState({
             imageArray: [...data.hits],
@@ -36,16 +38,13 @@ export class App extends Component {
           })
         }
       } catch {
-        this.setState({ error: `Failed to load ${this.state.search} :(`, status: "rejected", showModal: true });
-      } finally {
-        // i`m thinking
-        
-      }
+        this.setState({ error: `Failed to load ${search} :(`, status: "rejected", showModal: true });
+      } 
     }
 
-    if (this.state.page !== prevState.page & this.state.page !== 1) {
+    if (page !== prevState.page & page !== 1) {
       try {
-        const data = await searchImage({ search: this.state.search, page: this.state.page });
+        const data = await searchImage({ search, page });
         this.setState(prevState => ({
           imageArray: [...prevState.imageArray, ...data.hits],
           status: "resolved",
@@ -53,10 +52,8 @@ export class App extends Component {
         }))
       
       } catch {
-        this.setState({ error: `Failed to load ${this.state.search} :(`, status: "rejected", showModal: true });
-      } finally {
-        // i`m thinking        
-      }
+        this.setState({ error: `Failed to load ${search} :(`, status: "rejected", showModal: true });
+      } 
     }
 
   }
@@ -70,12 +67,11 @@ export class App extends Component {
     this.setState({ status: "pending", showModal: true });
   }
 
-  openImage = ({ url, alt, indx }) => {
+  openImage = ({ url, alt}) => {
     this.setState((prevState) => ({
       showModal: !prevState.showModal,
-      image: { url, alt, indx }
-    }));
-    console.log(url, alt);
+      image: { url, alt }
+    }));    
   }
 
   toggleModal = () => {
@@ -94,33 +90,35 @@ export class App extends Component {
   }
 
   render() {
-    
+    const {status, error, imageArray, showModal, image} = this.state;
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmit} />
 
-        {this.state.status === "rejected" && <Modal onClose={this.toggleModal}><div>{this.state.error}</div></Modal>}
+        {status === "rejected" && <ErrorMessage error={error} />}
           
-        {this.state.status === "pending" && <>
-          {this.state.imageArray.length > 0 ?
+        {status === "pending" && <>
+          {imageArray.length > 0 ?
             <>
-            < ImageGallery imageArray={this.state.imageArray} onClick={this.openImage} />
+            < ImageGallery imageArray={imageArray} onClick={this.openImage} />
               <LoadMoreBtn onClick={this.handleLoadMore} />
             <Loading/>
-            </> : <Loading/>}
+            </> :
+            <Loading />}
         </>
         }
         
-        {this.state.status === "resolved" && <>
-          {
-            this.state.image ? 
+        {status === "resolved" && <>
+          { showModal ? 
               <>
-                < ImageGallery imageArray={this.state.imageArray} onClick={this.openImage} />
+                <ImageGallery imageArray={imageArray} onClick={this.openImage} />
                 <LoadMoreBtn onClick={this.handleLoadMore} />
-                <Modal onClose={this.toggleModal}><LargeImage data={this.state.image} /></Modal>
+                <Modal onClose={this.toggleModal}>                  
+                  <LargeImage data={image} />
+                </Modal>
               </>:
               <>
-                < ImageGallery imageArray={this.state.imageArray} onClick={this.openImage} />
+                <ImageGallery imageArray={imageArray} onClick={this.openImage} />
                 <LoadMoreBtn onClick={this.handleLoadMore} />
               </>
           }

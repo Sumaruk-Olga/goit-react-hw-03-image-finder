@@ -5,7 +5,7 @@ import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 
 export function ImageGallery({ imageArray, onClick }) {
     return (<StyledList>
-        {imageArray.map((image, index) => <ImageGalleryItem key={image.id} image={image} onClick={onClick} indx={index } />)}        
+        {imageArray.map(image => <ImageGalleryItem key={image.id} image={image} onClick={onClick}  />)}        
     </StyledList>
             )
 }

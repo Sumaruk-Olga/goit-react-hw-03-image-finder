@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import { Backdrop, ModalWindow } from './Modal.styled';
 
 
@@ -15,15 +16,13 @@ export default class Modal extends Component {
   }
 
   handleKeyDown = e => {
-    if (e.code === 'Escape') {
-        console.log('при кліку на Escape', this.props.onClose);
+    if (e.code === 'Escape') {        
           this.props.onClose();
     }
   };
 
   handleBackdropClick = event => {
-    if (event.currentTarget === event.target) {
-      console.log('при кліку в бєкдроп', this.props.onClose);
+    if (event.currentTarget === event.target) {      
       this.props.onClose();
     }
   };
@@ -36,4 +35,8 @@ export default class Modal extends Component {
       modalRoot,
     );
   }
+}
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
 }
