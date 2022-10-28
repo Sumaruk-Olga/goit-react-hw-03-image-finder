@@ -6,7 +6,7 @@ import { ImageGallery } from "components/ImageGallery/ImageGallery";
 import { LoadMoreBtn } from "components/LoadMoreBtn/LoadMoreBtn";
 import { searchImage } from "services/searchApi";
 import Modal from "components/Modal/Modal";
-import { Image } from "components/Image/Image";
+import { LargeImage } from "components/LargeImage/LargeImage";
 import { Container } from "./App.styled";
 
 
@@ -70,18 +70,20 @@ export class App extends Component {
     this.setState({ status: "pending", showModal: true });
   }
 
-  openImage = ({ url, alt }) => {
+  openImage = ({ url, alt, indx }) => {
     this.setState((prevState) => ({
       showModal: !prevState.showModal,
-      image: { url, alt }
+      image: { url, alt, indx }
     }));
     console.log(url, alt);
   }
 
   toggleModal = () => {
-    this.setState((prevState) => ({
-      showModal: !prevState.showModal,
-    }));
+    this.setState(prevState => {
+      return ({
+        showModal: !prevState.showModal,
+      })
+    });
   }
 
   handleLoadMore = () => {
@@ -111,8 +113,12 @@ export class App extends Component {
         
         {this.state.status === "resolved" && <>
           {
-            this.state.image ?
-              <Modal onClose={this.toggleModal}><Image data={this.state.image} /></Modal> :
+            this.state.image ? 
+              <>
+                < ImageGallery imageArray={this.state.imageArray} onClick={this.openImage} />
+                <LoadMoreBtn onClick={this.handleLoadMore} />
+                <Modal onClose={this.toggleModal}><LargeImage data={this.state.image} /></Modal>
+              </>:
               <>
                 < ImageGallery imageArray={this.state.imageArray} onClick={this.openImage} />
                 <LoadMoreBtn onClick={this.handleLoadMore} />
