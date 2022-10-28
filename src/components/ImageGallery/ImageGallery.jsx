@@ -1,19 +1,18 @@
-// import PropTypes from 'prop-types';
+import PropTypes, { shape } from 'prop-types';
+import { StyledList } from 'components/ImageGallery/ImageGallery.styled';
 
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 
 export function ImageGallery({ imageArray, onClick }) {
-    // console.log('imageArray.hits', imageArray.hits);
-    return (<ul>
-        {/* пройтись мєпом і створити на кожній йтерації картку */
-            
-            imageArray.map(image => <ImageGalleryItem key={image.id} image={image} onClick={onClick} />)
-        }        
-    </ul>
+    return (<StyledList>
+        {imageArray.map(image => <ImageGalleryItem key={image.id} image={image} onClick={onClick} />)}        
+    </StyledList>
             )
 }
 
-// ImageGallery.propTypes = {
-//     onSubmit: PropTypes.array.isRequired,
-//     //дописати який саме масив
-// }
+ImageGallery.propTypes = {
+    imageArray: PropTypes.arrayOf(shape({
+        id: PropTypes.number.isRequired,
+    })).isRequired,    
+    onClick: PropTypes.func.isRequired,
+}

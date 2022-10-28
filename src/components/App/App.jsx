@@ -70,7 +70,7 @@ export class App extends Component {
     this.setState({ status: "pending", showModal: true });
   }
 
-  openModal = ({ url, alt }) => {
+  openImage = ({ url, alt }) => {
     this.setState((prevState) => ({
       showModal: !prevState.showModal,
       image: { url, alt }
@@ -102,7 +102,7 @@ export class App extends Component {
         {this.state.status === "pending" && <>
           {this.state.imageArray.length > 0 ?
             <>
-            < ImageGallery imageArray={this.state.imageArray} onClick={this.openModal} />
+            < ImageGallery imageArray={this.state.imageArray} onClick={this.openImage} />
               <LoadMoreBtn onClick={this.handleLoadMore} />
             <Loading/>
             </> : <Loading/>}
@@ -114,7 +114,7 @@ export class App extends Component {
             this.state.image ?
               <Modal onClose={this.toggleModal}><Image data={this.state.image} /></Modal> :
               <>
-                < ImageGallery imageArray={this.state.imageArray} onClick={this.openModal} />
+                < ImageGallery imageArray={this.state.imageArray} onClick={this.openImage} />
                 <LoadMoreBtn onClick={this.handleLoadMore} />
               </>
           }
