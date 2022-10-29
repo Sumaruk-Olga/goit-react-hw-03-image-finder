@@ -8,7 +8,7 @@ export function Loading (){
         color="#3f51b5"
         ariaLabel="tail-spin-loading"
         radius="1"
-        wrapperStyle={{}}
+            wrapperStyle={{}}
         wrapperClass=""
         visible={true}
     />

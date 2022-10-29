@@ -101,8 +101,9 @@ export class App extends Component {
           {imageArray.length > 0 ?
             <>
             < ImageGallery imageArray={imageArray} onClick={this.openImage} />
-              <LoadMoreBtn onClick={this.handleLoadMore} />
             <Loading/>
+            <LoadMoreBtn onClick={this.handleLoadMore} />
+            
             </> :
             <Loading />}
         </>
