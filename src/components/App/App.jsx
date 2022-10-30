@@ -20,6 +20,7 @@ export class App extends Component {
     error: null,
     showModal: false,
     image: {},
+    showLoadMoreBtn:true,
   };
 
 
@@ -27,29 +28,51 @@ export class App extends Component {
     const {search, page } = this.state;
     if (search !== prevState.search) {
       try {
-        const data = await searchImage({ search, page });
+        const data = await searchImage({ search, page }); 
         if (data.hits.length === 0) {
           this.setState({ error: `${search} not found :(`, status: "rejected", showModal: true });
         } else {
-          this.setState({
+          if (data.hits.length < 12) {
+            this.setState({
             imageArray: [...data.hits],
             status: "resolved",
             showModal: false,
+            showLoadMoreBtn:false,
           })
+          } else {
+            this.setState({
+            imageArray: [...data.hits],
+            status: "resolved",
+            showModal: false,
+            showLoadMoreBtn:true
+          })
+          }
+          
         }
       } catch {
         this.setState({ error: `Failed to load ${search} :(`, status: "rejected", showModal: true });
       } 
     }
 
-    if (page !== prevState.page & page !== 1) {
+    if (page !== prevState.page && page !== 1) {
       try {
-        const data = await searchImage({ search, page });
-        this.setState(prevState => ({
+        const data = await searchImage({ search, page }); 
+        if (data.hits.length < 12) {
+          this.setState(prevState => ({
           imageArray: [...prevState.imageArray, ...data.hits],
           status: "resolved",
           showModal: false,
+          showLoadMoreBtn: false,
         }))
+        } else {
+          this.setState(prevState => ({
+          imageArray: [...prevState.imageArray, ...data.hits],
+          status: "resolved",
+          showModal: false,
+          showLoadMoreBtn: true,
+        }))
+        }
+        
       
       } catch {
         this.setState({ error: `Failed to load ${search} :(`, status: "rejected", showModal: true });
@@ -64,7 +87,7 @@ export class App extends Component {
 
 
   handleSearch = () => {
-    this.setState({ status: "pending", showModal: true });
+    this.setState({ status: "pending", showModal: true, showLoadMoreBtn: true });
   }
 
   openImage = ({ url, alt}) => {
@@ -90,7 +113,7 @@ export class App extends Component {
   }
 
   render() {
-    const {status, error, imageArray, showModal, image} = this.state;
+    const {status, error, imageArray, showModal, image, showLoadMoreBtn} = this.state;
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmit} />
@@ -100,9 +123,9 @@ export class App extends Component {
         {status === "pending" && <>
           {imageArray.length > 0 ?
             <>
-            < ImageGallery imageArray={imageArray} onClick={this.openImage} />
+            <ImageGallery imageArray={imageArray} onClick={this.openImage} />
             <Loading/>
-            <LoadMoreBtn onClick={this.handleLoadMore} />
+            {showLoadMoreBtn && <LoadMoreBtn onClick={this.handleLoadMore} />}
             
             </> :
             <Loading />}
@@ -110,17 +133,17 @@ export class App extends Component {
         }
         
         {status === "resolved" && <>
-          { showModal ? 
+          {showModal ? 
               <>
                 <ImageGallery imageArray={imageArray} onClick={this.openImage} />
-                <LoadMoreBtn onClick={this.handleLoadMore} />
+                {showLoadMoreBtn && <LoadMoreBtn onClick={this.handleLoadMore} />}
                 <Modal onClose={this.toggleModal}>                  
                   <LargeImage data={image} />
                 </Modal>
               </>:
               <>
                 <ImageGallery imageArray={imageArray} onClick={this.openImage} />
-                <LoadMoreBtn onClick={this.handleLoadMore} />
+                {showLoadMoreBtn && <LoadMoreBtn onClick={this.handleLoadMore} />}
               </>
           }
         </>
